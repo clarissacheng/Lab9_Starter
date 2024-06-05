@@ -103,17 +103,14 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
 
       //STEP 4 - Invalid input, custom error example 1
       try {
         if (firstNum === '' || secondNum === '') {
           throw new Error('HEloo? Both input fields must be filled out.');
         }
-
       } catch (error) {
         console.error('Caught an error:', error);
-        output.innerHTML = error.message;
         return; // Exit early if there's an error
       }
 
@@ -122,38 +119,24 @@
         if (isNaN(firstNum) || isNaN(secondNum)) {
           throw new Error('I only read numbers: Please enter valid numbers.');
         }
-
-        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
       } catch (error) {
         console.error('Caught an error:', error);
-        output.innerHTML = error.message;
+        return;
       }
 
-    });
-    // Step 3 - throwing default errors (non-custom)
-    try {
-      // Check for division by zero
-      if (operator === '/' && secondNum === 0) {
-        throw new RangeError('Division by zero is not allowed.');
-      }
-        output.innerHTML = result;
-    } catch (error) {
-      console.error('Caught an error:', error);
-      output.innerHTML = error.message;
-    }
-    // Step 3 - throwing non custom errors, Check for overflow/underflow
-    try {
-    if (!isFinite(result)) {
-        throw new RangeError('The result is not a finite number.');
-    }
-
-        output.innerHTML = result;
-    } catch (error) {
+        // Step 3 - throwing default errors (non-custom)
+      try {
+        // Check for division by zero
+        if (operator === '/' && secondNum === 0) {
+          throw new RangeError('Division by zero is not allowed.');
+        }
+      } catch (error) {
         console.error('Caught an error:', error);
-        output.innerHTML = error.message;
-    }
+        return;
+      }
+      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+    });
 
-      
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
